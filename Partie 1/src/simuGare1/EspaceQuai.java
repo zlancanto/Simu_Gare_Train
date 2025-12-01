@@ -1,5 +1,7 @@
 package simuGare1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -9,10 +11,11 @@ public final class EspaceQuai implements Singleton
 {
     private static EspaceQuai instance;
     private int nbVoiesDispo;
-
+    private final List<Train> trainArret;
     private EspaceQuai(int nbVoies)
     {
         nbVoiesDispo = nbVoies;
+        trainArret = new ArrayList<>();
     }
 
     public static EspaceQuai getInstance(int nbVoies) 
@@ -48,6 +51,7 @@ public final class EspaceQuai implements Singleton
         }
 
         nbVoiesDispo--;
+        trainArret.add(train);
         train.setState(TrainState.EN_GARE);
         message = "Train <" + threadName + "> vient d'occuper un voie (nbVoiesDispo = " + nbVoiesDispo + " )";
         System.out.println(message);
@@ -63,6 +67,7 @@ public final class EspaceQuai implements Singleton
         System.out.println("Train <" + threadName + "> vient de partir");
 
         nbVoiesDispo++;
+        trainArret.remove(train);
         train.setState(TrainState.PARTI);
 
         /*
@@ -71,5 +76,21 @@ public final class EspaceQuai implements Singleton
          * Conclusion : utiliser notifyAll()
          */
         notifyAll();
+    }
+    
+    public synchronized void chercherTrain(Voyageur voyageur) throws InterruptedException
+    {
+    	while(voyageur.getVoyageurState() != VoyageurState.MONTE_DANS_UN_TRAIN) {
+	    	for(Train train : trainArret) 
+	    	{
+	    		if(train.getNbPlaces() > 0) 
+	    		{
+	    			train.decrement();
+	    			voyageur.setState(VoyageurState.MONTE_DANS_UN_TRAIN);
+	    			break;
+	    		}
+	    	}
+	        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
+    	}
     }
 }
