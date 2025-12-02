@@ -8,14 +8,14 @@ public class Train extends Thread {
     private static final int VITESSE_MIN = 50;
     private static final int VITESSE_MAX = 300;
     // En seconde
-    private static final int ARRET_TRAIN = 60;
+    private static final int ARRET_TRAIN = 10;
 
     private static final int CAPACITE_MIN = 0;
-    private static final int CAPACITE_MAX = 500;
+    private static final int CAPACITE_MAX = 100;
 
-    private final int nbPlaces;
+    private int nbPlaces;
     private final int vitesse;
-    private TrainState state;
+    private TrainState trainState;
     private final EspaceQuai quai;
 
     public Train() {
@@ -27,7 +27,7 @@ public class Train extends Thread {
                 .current()
                 .nextInt(VITESSE_MIN, VITESSE_MAX + 1);
 
-        state = TrainState.EN_ROUTE_VERS_GARE;
+        trainState = TrainState.EN_ROUTE_VERS_GARE;
         quai = EspaceQuai.getInstance(0);
     }
 
@@ -48,6 +48,16 @@ public class Train extends Thread {
 
     public void setState(TrainState state) {
         Objects.requireNonNull(state, "state cannot be null");
-        this.state = state;
+        this.trainState = state;
+    }
+    
+    public synchronized int getNbPlaces() 
+    {
+    	return this.nbPlaces;
+    }
+    
+    public synchronized void decrement() 
+    {
+    	this.nbPlaces --;
     }
 }

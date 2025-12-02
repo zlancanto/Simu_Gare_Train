@@ -1,5 +1,7 @@
 package simuGare1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -9,10 +11,12 @@ public final class EspaceQuai implements Singleton
 {
     private static EspaceQuai instance;
     private int nbVoiesDispo;
-
+    private final List<Train> trainArret;
+    
     private EspaceQuai(int nbVoies)
     {
         nbVoiesDispo = nbVoies;
+        trainArret = new ArrayList<>();
     }
 
     public static EspaceQuai getInstance(int nbVoies) 
@@ -48,8 +52,9 @@ public final class EspaceQuai implements Singleton
         }
 
         nbVoiesDispo--;
+        trainArret.add(train);
         train.setState(TrainState.EN_GARE);
-        message = "Train <" + threadName + "> vient d'occuper un voie (nbVoiesDispo = " + nbVoiesDispo + " )";
+        message = "Train <" + threadName + "> vient d'occuper un voie (nbVoiesDispo = " + nbVoiesDispo + " ) et a " + train.getNbPlaces() + " places.";
         System.out.println(message);
     }
 
@@ -60,9 +65,10 @@ public final class EspaceQuai implements Singleton
         Objects.requireNonNull(train, "train cannot be null");
 
         final String threadName = Thread.currentThread().getName();
-        System.out.println("Train <" + threadName + "> vient de partir");
+        System.out.println("Train <" + threadName + "> vient de partir avec " + train.getNbPlaces() + " places restantes." );
 
         nbVoiesDispo++;
+        trainArret.remove(train);
         train.setState(TrainState.PARTI);
 
         /*
@@ -71,5 +77,21 @@ public final class EspaceQuai implements Singleton
          * Conclusion : utiliser notifyAll()
          */
         notifyAll();
+    }
+    
+    public synchronized void chercherTrain(Voyageur voyageur) throws InterruptedException
+    {
+        final String threadName = Thread.currentThread().getName();
+
+	    	for(Train train : trainArret) 
+	    	{
+	    		if(train.getNbPlaces() > 0) 
+	    		{
+	    			train.decrement(); // méthode Synchronized pour la lecture et l'écriture, aucun soucis en vue.
+	    			voyageur.setState(VoyageurState.MONTE_DANS_UN_TRAIN);
+	    			System.out.println("Voyageur <" + threadName + "> vient de monter dans le train <" + train.getName() +">");
+	    			break;
+	    		}
+	    	}
     }
 }
