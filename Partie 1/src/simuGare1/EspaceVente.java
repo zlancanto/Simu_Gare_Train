@@ -5,7 +5,7 @@ package simuGare1;
  */
 public final class EspaceVente implements Singleton 
 {
-    private static final int TEMPS_IMPRESSION_BILLET = 200;
+    private static final int TEMPS_IMPRESSION_BILLET = 20;
     private static EspaceVente instance;
     private int nbBillets;
 
@@ -33,6 +33,7 @@ public final class EspaceVente implements Singleton
 
         /**
          * Si un voyageur ne peut pas acheter de billet, il ne pourra jamais en acheter un.
+         * Don il n'y a pas besoin de retester la condition.
          */
         if (nbBillets == 0) {
         	message = "Voyageur <" + threadName + "> ne peut pas acheter de billet";

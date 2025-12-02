@@ -24,15 +24,20 @@ public class Voyageur extends Thread {
     {
     	try {
 			espaceVente.vendreBillet(this);
+			if(this.state == VoyageurState.MUNI_D_UN_TICKET) 
+			{
+				while(this.state != VoyageurState.MONTE_DANS_UN_TRAIN)
+				{
+					quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
+			        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
+
+				}
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
     	
-		if(this.state == VoyageurState.MUNI_D_UN_TICKET) 
-		{
-			// Il cherche un train avec une place libre.
-		}
-		
+	
     }
     
     

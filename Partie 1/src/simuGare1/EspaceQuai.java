@@ -12,6 +12,7 @@ public final class EspaceQuai implements Singleton
     private static EspaceQuai instance;
     private int nbVoiesDispo;
     private final List<Train> trainArret;
+    
     private EspaceQuai(int nbVoies)
     {
         nbVoiesDispo = nbVoies;
@@ -53,7 +54,7 @@ public final class EspaceQuai implements Singleton
         nbVoiesDispo--;
         trainArret.add(train);
         train.setState(TrainState.EN_GARE);
-        message = "Train <" + threadName + "> vient d'occuper un voie (nbVoiesDispo = " + nbVoiesDispo + " )";
+        message = "Train <" + threadName + "> vient d'occuper un voie (nbVoiesDispo = " + nbVoiesDispo + " ) et a " + train.getNbPlaces() + " places.";
         System.out.println(message);
     }
 
@@ -64,7 +65,7 @@ public final class EspaceQuai implements Singleton
         Objects.requireNonNull(train, "train cannot be null");
 
         final String threadName = Thread.currentThread().getName();
-        System.out.println("Train <" + threadName + "> vient de partir");
+        System.out.println("Train <" + threadName + "> vient de partir avec " + train.getNbPlaces() + " places restantes." );
 
         nbVoiesDispo++;
         trainArret.remove(train);
@@ -80,17 +81,17 @@ public final class EspaceQuai implements Singleton
     
     public synchronized void chercherTrain(Voyageur voyageur) throws InterruptedException
     {
-    	while(voyageur.getVoyageurState() != VoyageurState.MONTE_DANS_UN_TRAIN) {
+        final String threadName = Thread.currentThread().getName();
+
 	    	for(Train train : trainArret) 
 	    	{
 	    		if(train.getNbPlaces() > 0) 
 	    		{
-	    			train.decrement();
+	    			train.decrement(); // méthode Synchronized pour la lecture et l'écriture, aucun soucis en vue.
 	    			voyageur.setState(VoyageurState.MONTE_DANS_UN_TRAIN);
+	    			System.out.println("Voyageur <" + threadName + "> vient de monter dans le train <" + train.getName() +">");
 	    			break;
 	    		}
 	    	}
-	        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
-    	}
     }
 }
