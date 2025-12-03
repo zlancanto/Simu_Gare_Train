@@ -10,18 +10,16 @@ public class Train extends Thread {
     // En seconde
     private static final int ARRET_TRAIN = 10;
 
-    private static final int CAPACITE_MIN = 0;
-    private static final int CAPACITE_MAX = 100;
+   
 
     private int nbPlaces;
     private final int vitesse;
     private TrainState trainState;
     private final EspaceQuai quai;
 
-    public Train() {
-        nbPlaces = ThreadLocalRandom
-                .current()
-                .nextInt(CAPACITE_MIN, CAPACITE_MAX + 1);
+    private int identifiant;
+    public Train(int nbPlaces) {
+        this.nbPlaces = nbPlaces;
 
         vitesse = ThreadLocalRandom
                 .current()
@@ -60,4 +58,12 @@ public class Train extends Thread {
     {
     	this.nbPlaces --;
     }
+
+	public int getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(int identifiant) {
+		this.identifiant = identifiant;
+	}
 }

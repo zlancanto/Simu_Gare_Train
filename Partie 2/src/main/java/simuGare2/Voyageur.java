@@ -10,6 +10,7 @@ public class Voyageur extends Thread {
     private final EspaceQuai quai;
     private final EspaceVente espaceVente;
 
+    private int identifiant;
     public Voyageur() 
     {
         state = VoyageurState.EN_ROUTE_VERS_GARE;
@@ -49,4 +50,16 @@ public class Voyageur extends Thread {
     public synchronized VoyageurState getVoyageurState() {
     	return this.state;
     }
+
+
+
+	public int getIdentifiant() {
+		return identifiant;
+	}
+
+
+
+	public void setIdentifiant(int numero) {
+		this.identifiant = numero;
+	}
 }
