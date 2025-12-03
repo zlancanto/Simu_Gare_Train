@@ -1,8 +1,14 @@
 package simuGare2;
 
-import java.util.ArrayList;
-import java.util.List;
+import database.InMemoryDatabase;
 import java.util.Random;
+
+import org.restlet.Component;
+import org.restlet.Context;
+import org.restlet.data.Protocol;
+import org.restlet.Application;
+
+import application.MyGareApplication;
 
 public class Gare 
 {
@@ -10,9 +16,21 @@ public class Gare
 	private final static int NOMBRE_MAX_BILLETS = 1000;
 	private final static int NOMBRE_MAX_TRAINS = 15;
 	private final static int NOMBRE_MAX_VOYAGEURS = 1500;
+	private final static int CAPACITE_MAX = 100;
+	private final static InMemoryDatabase db = InMemoryDatabase.getInstance();
 	
-    public static void main(String[] args) 
+    public static void main(String[] args) throws Exception
     {
+    	Component component = new Component();
+    	Context context = component.getContext().createChildContext();
+    	component.getServers().add(Protocol.HTTP, 8124);
+    	
+    	Application application = new MyGareApplication(context);
+    	
+    	context.getAttributes().put("database", db);
+    	component.getDefaultHost().attach(application);
+    	component.start();
+    	
     	int nbPlaceTot = 0;
     	Random rand = new Random();
     	int nombre = rand.nextInt(NOMBRE_MAX_VOIES) + 1;
@@ -28,14 +46,15 @@ public class Gare
 		
 		for(int i = 0; i < nombreTrain; i ++) 
 		{
-			Train train = new Train();
+			int nbPlaces = rand.nextInt(CAPACITE_MAX) + 1;
+			Train train = db.createTrain(nbPlaces);
 	    	nbPlaceTot += train.getNbPlaces();
 	    	train.start();
 	    }
 	    System.out.println("TotPlaces : " + nbPlaceTot);
 	      
 	      for(int i = 0; i < nombreVoyageurs; i++) {
-	    	  Voyageur voyageur = new Voyageur();
+	    	  Voyageur voyageur = db.createVoyageur();
 	    	  voyageur.setDaemon(true);
 	    	  voyageur.start();
 	      }
