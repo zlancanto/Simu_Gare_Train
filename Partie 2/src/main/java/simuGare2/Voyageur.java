@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Voyageur extends Thread {
     // En millisecondes
-    public static final int DELAI_ENTRE_RECHERCHES = 100;
+    public static final int DELAI_ENTRE_RECHERCHES = 1000; // en ms. Ici = 1s
 
     private VoyageurState state;
     private final EspaceQuai quai;

@@ -5,7 +5,7 @@ package simuGare2;
  */
 public final class EspaceVente implements Singleton 
 {
-    private static final int TEMPS_IMPRESSION_BILLET = 20;
+    private static final int TEMPS_IMPRESSION_BILLET = 500; // en ms
     private static EspaceVente instance;
     private int nbBillets;
 
