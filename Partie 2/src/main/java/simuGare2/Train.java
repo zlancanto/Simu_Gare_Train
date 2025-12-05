@@ -8,7 +8,7 @@ public class Train extends Thread {
     private static final int VITESSE_MIN = 50;
     private static final int VITESSE_MAX = 300;
     // En seconde
-    private static final int ARRET_TRAIN = 10;
+    private static final int ARRET_TRAIN = 30;
 
    
 
@@ -47,6 +47,10 @@ public class Train extends Thread {
     public void setState(TrainState state) {
         Objects.requireNonNull(state, "state cannot be null");
         this.trainState = state;
+    }
+    
+    public synchronized TrainState getVoyageurState() {
+    	return this.trainState;
     }
     
     public synchronized int getNbPlaces() 
