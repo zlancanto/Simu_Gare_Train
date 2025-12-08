@@ -33,10 +33,10 @@ public class Gare
     	
     	int nbPlaceTot = 0;
     	Random rand = new Random();
-    	int nombre = rand.nextInt(NOMBRE_MAX_VOIES) + 1;
-    	EspaceQuai.getInstance(nombre);
+    	int nombreVoies = rand.nextInt(NOMBRE_MAX_VOIES) + 1;
+    	EspaceQuai.getInstance(nombreVoies);
     	EspaceVente.getInstance(NOMBRE_MAX_BILLETS);
-    	System.out.println(nombre + " voies.");
+    	System.out.println(nombreVoies + " voies.");
     	// on créé les trains
     	int nombreTrain = rand.nextInt(NOMBRE_MAX_TRAINS) + 1 ;
     	int nombreVoyageurs = rand.nextInt(NOMBRE_MAX_VOYAGEURS);
@@ -53,10 +53,10 @@ public class Gare
 	    }
 	    System.out.println("TotPlaces : " + nbPlaceTot);
 	      
-	      for(int i = 0; i < nombreVoyageurs; i++) {
-	    	  Voyageur voyageur = db.createVoyageur();
-	    	  voyageur.setDaemon(true);
-	    	  voyageur.start();
-	      }
+        for(int i = 0; i < nombreVoyageurs; i++) {
+          Voyageur voyageur = db.createVoyageur();
+          voyageur.setDaemon(true);
+          voyageur.start();
+        }
 	}
 }

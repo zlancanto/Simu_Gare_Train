@@ -30,13 +30,18 @@ public final class EspaceQuai implements Singleton
 
     /**
      * Pour marquer qu'une voie vient d'être occupée
+     * synchronized' sur la methode car on agit sur nos
+     * variables d'état 'nbVoiesDispo' & 'trainArret'
+     * @param train qui doit occuper la voie
+     * @throws InterruptedException lors de l'exécution
+     * @throws NullPointerException si train == null
      */
     public synchronized void occuperVoie(Train train) throws InterruptedException 
     {
         Objects.requireNonNull(train, "train cannot be null");
 
         final String threadName = Thread.currentThread().getName();
-        String message = "";
+        String message;
 
         /*
          * Quand une voie est libérée, EspaceQuai notifie
@@ -60,16 +65,19 @@ public final class EspaceQuai implements Singleton
 
     /**
      * Pour marquer qu'une voie vient d'être libérée
+     * @param train qui libère la voie
+     * @throws NullPointerException si train == null
      */
-    public synchronized void libererVoie(Train train) {
+    public synchronized void libererVoie(Train train)
+    {
         Objects.requireNonNull(train, "train cannot be null");
-
-        final String threadName = Thread.currentThread().getName();
-        System.out.println("Train <" + threadName + "> vient de partir avec " + train.getNbPlaces() + " places restantes." );
 
         nbVoiesDispo++;
         trainArret.remove(train);
         train.setState(TrainState.PARTI);
+
+        final String threadName = Thread.currentThread().getName();
+        System.out.println("Train <" + threadName + "> vient de partir avec " + train.getNbPlaces() + " places restantes." );
 
         /*
          * Les threads Train et Voyageur peuvent tous être bloqué
@@ -81,17 +89,18 @@ public final class EspaceQuai implements Singleton
     
     public synchronized void chercherTrain(Voyageur voyageur) throws InterruptedException
     {
+        Objects.requireNonNull(voyageur, "voyageur cannot be null");
         final String threadName = Thread.currentThread().getName();
 
-	    	for(Train train : trainArret) 
-	    	{
-	    		if(train.getNbPlaces() > 0) 
-	    		{
-	    			train.decrement(); // méthode Synchronized pour la lecture et l'écriture, aucun soucis en vue.
-	    			voyageur.setState(VoyageurState.MONTE_DANS_UN_TRAIN);
-	    			System.out.println("Voyageur <" + threadName + "> vient de monter dans le train <" + train.getName() +">");
-	    			break;
-	    		}
-	    	}
+        for(Train train : trainArret)
+        {
+            if(train.getNbPlaces() > 0)
+            {
+                train.decrement(); // méthode Synchronized pour la lecture et l'écriture, aucun soucis en vue.
+                voyageur.setState(VoyageurState.MONTE_DANS_UN_TRAIN);
+                System.out.println("Voyageur <" + threadName + "> vient de monter dans le train <" + train.getName() +">");
+                break;
+            }
+        }
     }
 }

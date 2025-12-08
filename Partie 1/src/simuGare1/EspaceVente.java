@@ -1,10 +1,13 @@
 package simuGare1;
 
+import java.util.Objects;
+
 /**
  * {@inheritDoc}
  */
 public final class EspaceVente implements Singleton 
 {
+    // En millisecondes
     private static final int TEMPS_IMPRESSION_BILLET = 20;
     private static EspaceVente instance;
     private int nbBillets;
@@ -25,15 +28,20 @@ public final class EspaceVente implements Singleton
 
     /**
      * Permet de vendre un billet
+     * @param voyageur qui achète le billet
+     * @throws InterruptedException en cas d'interruption
+     * @throws NullPointerException si voyageur == null
      */
     public synchronized void vendreBillet(Voyageur voyageur) throws InterruptedException
     {
-        final String threadName = Thread.currentThread().getName();
-        String message = "";
+        Objects.requireNonNull(voyageur, "voyageur can't be null");
 
-        /**
+        final String threadName = Thread.currentThread().getName();
+        String message;
+
+        /*
          * Si un voyageur ne peut pas acheter de billet, il ne pourra jamais en acheter un.
-         * Don il n'y a pas besoin de retester la condition.
+         * Donc il n'a pas besoin de retester la condition.
          */
         if (nbBillets == 0) {
         	message = "Voyageur <" + threadName + "> ne peut pas acheter de billet";

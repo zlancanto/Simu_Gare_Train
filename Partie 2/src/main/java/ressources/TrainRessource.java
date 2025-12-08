@@ -24,7 +24,10 @@ public class TrainRessource extends ServerResource
 	public TrainRessource()
 	{
 		super();
-		db = (InMemoryDatabase) getApplication().getContext().getAttributes().get("database");
+		db = (InMemoryDatabase) getApplication()
+                .getContext()
+                .getAttributes()
+                .get("database");
 	}
 	
 	@Get("json")
@@ -38,7 +41,7 @@ public class TrainRessource extends ServerResource
             JSONObject current = new JSONObject();
             current.put("id", train.getIdentifiant());
             current.put("nbPlaces", train.getNbPlaces());
-            current.put("état", train.getState());
+            current.put("état", train.getTrainState());
             jsonTrain.add(current);
 
         }
@@ -60,5 +63,4 @@ public class TrainRessource extends ServerResource
 
 	    return new JsonRepresentation(response);
 	}
-
 }

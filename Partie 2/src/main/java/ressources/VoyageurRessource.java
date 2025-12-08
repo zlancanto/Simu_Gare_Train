@@ -35,7 +35,7 @@ public class VoyageurRessource extends ServerResource
         {
             JSONObject current = new JSONObject();
             current.put("id", voyageur.getIdentifiant());
-            current.put("état", voyageur.getState());
+            current.put("état", voyageur.getVoyageurState());
             jsonVoyageurs.add(current);
 
         }

@@ -1,1 +1,7 @@
 /target/
+.idea/
+/../out/
+.classpath
+.project
+.settings/
+../csrtp5.iml

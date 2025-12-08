@@ -17,9 +17,7 @@ public class Voyageur extends Thread {
         quai = EspaceQuai.getInstance(0);
         espaceVente = EspaceVente.getInstance(0);
     }
-    
-    
-    
+
     @Override
     public void run() 
     {
@@ -41,23 +39,18 @@ public class Voyageur extends Thread {
 	
     }
     
-    
     public void setState(VoyageurState state) {
         Objects.requireNonNull(state, "state cannot be null");
         this.state = state;
     }
-    
+
     public synchronized VoyageurState getVoyageurState() {
     	return this.state;
     }
 
-
-
 	public int getIdentifiant() {
 		return identifiant;
 	}
-
-
 
 	public void setIdentifiant(int numero) {
 		this.identifiant = numero;

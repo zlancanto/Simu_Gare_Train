@@ -30,23 +30,16 @@ public class Voyageur extends Thread {
 				{
 					quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
 			        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
-
 				}
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-    	
-	
-    }
+	}
     
     
     public void setState(VoyageurState state) {
         Objects.requireNonNull(state, "state cannot be null");
         this.state = state;
-    }
-    
-    public synchronized VoyageurState getVoyageurState() {
-    	return this.state;
     }
 }

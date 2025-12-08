@@ -49,7 +49,7 @@ public class Train extends Thread {
         this.trainState = state;
     }
     
-    public synchronized TrainState getVoyageurState() {
+    public synchronized TrainState getTrainState() {
     	return this.trainState;
     }
     
