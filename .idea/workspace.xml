@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c0be316-67e9-40eb-81a0-4b694d3fb4ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Partie 1/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 1/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Partie 1/src/simuGare1/EspaceQuai.java" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 1/src/simuGare1/EspaceQuai.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Partie 1/src/simuGare1/EspaceVente.java" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 1/src/simuGare1/EspaceVente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Partie 1/src/simuGare1/Gare.java" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 1/src/simuGare1/Gare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Partie 1/src/simuGare1/Voyageur.java" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 1/src/simuGare1/Voyageur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Partie 2/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Partie 2/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
