@@ -65,6 +65,8 @@ public final class EspaceQuai implements Singleton
 
     /**
      * Pour marquer qu'une voie vient d'être libérée
+     * synchronized' sur la methode car on agit sur nos
+     * variables d'état 'nbVoiesDispo' & 'trainArret'
      * @param train qui libère la voie
      * @throws NullPointerException si train == null
      */
@@ -86,7 +88,17 @@ public final class EspaceQuai implements Singleton
          */
         notifyAll();
     }
-    
+
+    /**
+     * Permet aux Voyageurs de chercher un train
+     * 'synchronized' car après avoir vérifié que
+     * "train.getNbPlaces() > 0", il se pourrait
+     * qu'un autre Voyageur décrémente le nombre
+     * de places du train avant le Voyageur courant. Amenant
+     * ainsi la condition "train.getNbPlaces() > 0" à false
+     * @param voyageur qui cherche le train
+     * @throws InterruptedException en cas d'interruption
+     */
     public synchronized void chercherTrain(Voyageur voyageur) throws InterruptedException
     {
         Objects.requireNonNull(voyageur, "voyageur cannot be null");

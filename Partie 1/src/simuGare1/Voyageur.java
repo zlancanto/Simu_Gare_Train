@@ -36,8 +36,11 @@ public class Voyageur extends Thread {
 			e.printStackTrace();
 		}
 	}
-    
-    
+
+    /**
+     * Permet de modifier l'état du voyageur
+     * @param state nouvel état du voyageur
+     */
     public void setState(VoyageurState state) {
         Objects.requireNonNull(state, "state cannot be null");
         this.state = state;
