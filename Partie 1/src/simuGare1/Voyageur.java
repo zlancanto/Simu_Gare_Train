@@ -16,21 +16,16 @@ public class Voyageur extends Thread {
         quai = EspaceQuai.getInstance(0);
         espaceVente = EspaceVente.getInstance(0);
     }
-    
-    
-    
+
     @Override
     public void run() 
     {
     	try {
 			espaceVente.vendreBillet(this);
-			if(this.state == VoyageurState.MUNI_D_UN_TICKET) 
+            while(this.state == VoyageurState.MUNI_D_UN_TICKET)
 			{
-				while(this.state != VoyageurState.MONTE_DANS_UN_TRAIN)
-				{
-					quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
-			        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
-				}
+                quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
+                Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
