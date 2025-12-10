@@ -25,6 +25,10 @@ public final class EspaceVente implements Singleton
 
     /**
      * Permet de vendre un billet
+     * 'synchronized' car on accède à la variable d'état nbBillets
+     * @param voyageur qui achète le billet
+     * @throws InterruptedException en cas d'interruption
+     * @throws NullPointerException si voyageur == null
      */
     public synchronized void vendreBillet(Voyageur voyageur) throws InterruptedException
     {

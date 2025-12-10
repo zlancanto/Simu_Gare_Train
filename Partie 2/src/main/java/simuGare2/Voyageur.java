@@ -23,27 +23,28 @@ public class Voyageur extends Thread {
     {
     	try {
 			espaceVente.vendreBillet(this);
-			if(this.state == VoyageurState.MUNI_D_UN_TICKET) 
-			{
-				while(this.state != VoyageurState.MONTE_DANS_UN_TRAIN)
-				{
-					quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
-			        Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
-
-				}
-			}
+            while(this.state == VoyageurState.MUNI_D_UN_TICKET)
+            {
+                quai.chercherTrain(this); // on met l'attente dans le run plutôt que le moniteur.
+                Thread.sleep(Voyageur.DELAI_ENTRE_RECHERCHES);
+            }
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-    	
-	
-    }
-    
+	}
+
+    /**
+     * Permet de modifier l'état du voyageur
+     * @param state le nouvel état du voyageur
+     */
     public void setState(VoyageurState state) {
         Objects.requireNonNull(state, "state cannot be null");
         this.state = state;
     }
 
+    /**
+     * Permet de récupérer l'état du voyageur
+     */
     public synchronized VoyageurState getVoyageurState() {
     	return this.state;
     }

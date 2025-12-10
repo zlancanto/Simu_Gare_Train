@@ -52,12 +52,23 @@ public class Train extends Thread {
     public synchronized TrainState getTrainState() {
     	return this.trainState;
     }
-    
+
+    /**
+     * Le train est un thread qui utilise la variable
+     * partagée {@code quai}. Cependant il représente
+     * un moniteur pour les Voyageurs. Ainsi il faut un
+     * 'synchronized' sur l'accès à ces variables d'état. En
+     * l'occurence 'nbPlaces'
+     * @return le nombre de places dispo dans le train
+     */
     public synchronized int getNbPlaces() 
     {
     	return this.nbPlaces;
     }
-    
+
+    /**
+     * 'synchronized' car on modifie la variable d'état 'nbPlaces'
+     */
     public synchronized void decrement() 
     {
     	this.nbPlaces --;
