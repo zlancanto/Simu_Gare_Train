@@ -44,12 +44,13 @@ public final class EspaceQuai implements Singleton
         String message;
 
         /*
+         * Dans notre système les Voyageurs ne sont jamais bloqués
          * Quand une voie est libérée, EspaceQuai notifie
-         * tous les threads bloqués. Ainsi à son reveil,
-         * le thread courant pourrait être devancé par un autre Train.
-         * Conclusion : utiliser while pour retester la condition
+         * un seul Train bloqué. Ainsi à son reveil,
+         * le Train courant ne peut être devancé par aucun autre Train.
+         * Conclusion : utiliser if est plus optimal
          */
-        while (nbVoiesDispo == 0) {
+        if (nbVoiesDispo == 0) {
             train.setState(TrainState.EN_ATTENTE_VOIE_LIBRE);
             message = "Train <" + threadName + "> vient d'intégrer la file d'attente";
             System.out.println(message);
@@ -82,11 +83,10 @@ public final class EspaceQuai implements Singleton
         System.out.println("Train <" + threadName + "> vient de partir avec " + train.getNbPlaces() + " places restantes." );
 
         /*
-         * Les threads Train et Voyageur peuvent tous être bloqué
-         * et on veut être sûr de réveiller un Train
-         * Conclusion : utiliser notifyAll()
+         * Il n'y a que des Threads train qui dorment.
+         * Pas besoin de tous les réveiller, un seul suffit
          */
-        notifyAll();
+        notify();
     }
 
     /**
