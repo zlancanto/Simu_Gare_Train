@@ -34,7 +34,7 @@ public class TrainRessource extends ServerResource
 	public Representation getTrains() throws JSONException
 	{
 		Collection<Train> trains = db.getTrains();
-        Collection<JSONObject> jsonTrain = new ArrayList<JSONObject>();
+        Collection<JSONObject> jsonTrain = new ArrayList<>();
 
         for (Train train : trains)
         {
