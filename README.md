@@ -29,9 +29,5 @@ L'API permet de suivre et modifier l'état de la simulation:
 
 ## 🛠️ Installation et Exécution
 1. S'assurer d'avoir le JDK Java installé.
-2. Inclure la librairie **Restlet** dans le classpath pour la Partie 2[cite: 22].
-3. Compiler et lancer la classe principale `Gare`[cite: 8].
-
----
-**Date limite de rendu** : 10 décembre 2025[cite: 39].
-**Format objet mail** : `[TP-CSR Gr<x>] <Nom1> <Nom2>`[cite: 40].
+2. Inclure la librairie **Restlet** dans le classpath pour la Partie 2.
+3. Compiler et lancer la classe principale `Gare`.
